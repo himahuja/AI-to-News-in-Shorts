@@ -85,38 +85,6 @@ nav li a:hover{
 	background-color: #383838;
 	border-radius: 3px;
 }
-#adbanner{
-	margin-top: 50px;
-	height: 124px;
-	background-color: #dbdbdb;
-	border-bottom: 1px solid #c3c3c3;
-}
-#ad{
-	width: 728px;
-	margin: auto;
-}
-#adbanner a{
-	display: inline-block;
-	border: 1px solid #c3c3c3;
-	height: 90px;
-	width: 728px;
-	margin: 16px auto;
-	color: #6b6b6b;
-	text-decoration: none;
-	font-family: Verdana, Arial, sans-serif;
-	font-size: 14px;
-	background-color: #d1d1d1;
-}
-#adbanner a:hover{
-	border: 1px solid #a7a7a7;
-	/*text-decoration: underline;*/
-	color: #3f3f3f;
-	background-color: #cacaca;
-}
-#adbanner a p{
-	text-align: center;
-	margin-top: 35px;
-}
 section{
 	width: 1000px;
 	margin: auto;
