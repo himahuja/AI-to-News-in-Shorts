@@ -57,6 +57,30 @@ header h1 a{
 	top:8px;
 	left: 35px;
 }
+
+#switch {
+    width: 80px;
+    height: 25px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 3px;
+  	display: inline-block;
+}
+.switchon {
+    background: red;
+    background-size: contain;
+}
+.switchoff {
+    background: grey;
+    background-size: contain;
+}
+
+span {
+    display: block;
+    margin-top: 20px;
+}
+
 #version{
 	color: white;
 	font-size: 10px;
