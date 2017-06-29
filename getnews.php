@@ -11,6 +11,10 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
+////////////////////
+$last_iid = 184;
+/////////////////
+
 
 //// GETTING IID ////
 $_iid = $_GET["iid"];
@@ -34,6 +38,26 @@ if(isset($_GET["t"])){
              ON DUPLICATE KEY UPDATE
              counter = counter + $_t";
   mysqli_query($conn, $update);
+}
+
+/*
+██████  ███████  █████  ██████        ███    ███  ██████  ██████  ███████
+██   ██ ██      ██   ██ ██   ██       ████  ████ ██    ██ ██   ██ ██
+██████  █████   ███████ ██   ██       ██ ████ ██ ██    ██ ██████  █████
+██   ██ ██      ██   ██ ██   ██       ██  ██  ██ ██    ██ ██   ██ ██
+██   ██ ███████ ██   ██ ██████        ██      ██  ██████  ██   ██ ███████
+*/
+
+if(isset($_GET["readmore"])){
+  $_readmore = $_GET["readmore"];
+  if($_readmore === 1){
+    $_readmore = 'Y';
+  }
+  $readmoreupdate = "INSERT INTO stats (iid, bookmark, readmore, counter)
+             VALUES ('$_iid', NULL, '$_readmore', NULL)
+             ON DUPLICATE KEY UPDATE
+             readmore = '$_readmore'";
+  mysqli_query($conn, $readmoreupdate);
 }
 
 /*
@@ -77,10 +101,10 @@ if(isset($_GET["dir"])){
   }
   ////////////// ADJUSTING IID //////////////
   if($_dir == -1 && $_iid == 0){
-    $_iid = 45768;
+    $_iid = $last_iid;
   }
 
-  else if($_dir == 1 && $_iid == 45768){
+  else if($_dir == 1 && $_iid == $last_iid){
     $_iid = 0;
   }
   else{
@@ -114,7 +138,8 @@ if (mysqli_num_rows($result) > 0) {
         <h1>".$row["headline"]."</h1>
         <p>".$row["author"]."</p>
         <p>".$row["articleBody"]."</p>
-        <a href='#' class='readmore'>Read more</a>";
+        <a href='#' class='readmore' onclick='return readmorenews();'>
+        Read more</a>";
         if(mysqli_num_rows($result2) > 0){
           while($statement = mysqli_fetch_assoc($result2)){
             if($statement["bookmark"] == 'Y'){

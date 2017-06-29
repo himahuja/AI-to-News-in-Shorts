@@ -38,6 +38,35 @@ function timeAdd(){
 /////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////
 
+/*
+██████  ███████  █████  ██████        ███    ███  ██████  ██████  ███████
+██   ██ ██      ██   ██ ██   ██       ████  ████ ██    ██ ██   ██ ██
+██████  █████   ███████ ██   ██       ██ ████ ██ ██    ██ ██████  █████
+██   ██ ██      ██   ██ ██   ██       ██  ██  ██ ██    ██ ██   ██ ██
+██   ██ ███████ ██   ██ ██████        ██      ██  ██████  ██   ██ ███████
+*/
+
+function readmorenews(){
+  console.log('Well! Hello good reader!')
+  xmlhttp = new GetXmlHttpObject;
+  if(xmlhttp == null){
+    alert("Your browser does not support XMLHTTP!");
+    return;
+  }
+  var article = "getnews.php";
+  var iid = document.getElementById('identity').innerHTML;
+  article = article + "?iid=" + iid;
+  var temp = 1;
+  article = article + "&readmore=" + temp;
+  article = article + "&t=" + time;
+  xmlhttp.onreadystatechange = stateChange;
+  xmlhttp.open("GET", article, true);
+  xmlhttp.send(null);
+  timeReset();
+  clearInterval(counter);
+  counter = setInterval(timeAdd, 2000);
+  return true;
+}
 
 /*
 ██████   ██████   ██████  ██   ██ ███    ███  █████  ██████  ██   ██
