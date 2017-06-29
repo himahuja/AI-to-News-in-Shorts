@@ -2,9 +2,10 @@
 var xmlhttp;
 var time;
 var counter; //pseudo variable
-/*
-The iterator varibale allow different functionality on the same keydown event
-*/
+///////////////////////////////////////////////////////
+//////////////////////////////////////////////////////
+
+
 ////////////// CREATING REQUEST OBJECT ////////////////
 function GetXmlHttpObject(){
   if(window.XMLHttpRequest){
@@ -17,25 +18,76 @@ function GetXmlHttpObject(){
     return null;
   }
 }
+//////////////////////////////////////////////////////////////
 ////////////////////// stateChange ///////////////////////////
+/////////////////////////////////////////////////////////////
 function stateChange() {
   if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
     document.body.innerHTML = xmlhttp.responseText;
   }
 }
-/////////////////////////////////////////////////////////////////////
-//////////////////////TIME RECODRING HELPERS/////////////////////////
+//////////////////////////////////////////////////////////////
+//////////////////////TIME RECODRING HELPERS/////////////////
+/////////////////////////////////////////////////////////////
 function timeReset(){
   time = 0;
 }
 function timeAdd(){
   time = time + 1;
 }
-////////////////////////////////////////////////////////////////////
-////////////////////// LOADING THE 1st ARTICLE /////////////////////
-////////////////////////////////////////////////////////////////////
-function loadfirstarticle(){
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
 
+
+/*
+██████   ██████   ██████  ██   ██ ███    ███  █████  ██████  ██   ██
+██   ██ ██    ██ ██    ██ ██  ██  ████  ████ ██   ██ ██   ██ ██  ██
+██████  ██    ██ ██    ██ █████   ██ ████ ██ ███████ ██████  █████
+██   ██ ██    ██ ██    ██ ██  ██  ██  ██  ██ ██   ██ ██   ██ ██  ██
+██████   ██████   ██████  ██   ██ ██      ██ ██   ██ ██   ██ ██   ██
+*/
+
+
+function bookmarknews(){
+  var bookmark;
+  button = document.getElementById('switch')
+  if (button.classList.contains('switchoff')){
+    button.className = "switchon";
+    bookmark = 1;
+  }
+  else if(button.classList.contains('switchon')){
+    button.className = "switchoff";
+    bookmark = 0;
+  }
+  xmlhttp = new GetXmlHttpObject;
+  if(xmlhttp == null){
+    alert("Your browser does not support XMLHTTP!");
+    return;
+  }
+  var article = "getnews.php";
+  var iid = document.getElementById('identity').innerHTML;
+  article = article + "?iid=" + iid;
+  article = article + "&bookmark=" + bookmark;
+  article = article + "&t=" + time;
+  xmlhttp.onreadystatechange = stateChange;
+  xmlhttp.open("GET", article, true);
+  xmlhttp.send(null);
+  timeReset();
+  clearInterval(counter);
+  counter = setInterval(timeAdd, 2000);
+  console.log('Bookmark' + iid + " " + bookmark);
+}
+
+/*
+██       ██████   █████  ██████      ███████ ██ ██████  ███████ ████████
+██      ██    ██ ██   ██ ██   ██     ██      ██ ██   ██ ██         ██
+██      ██    ██ ███████ ██   ██     █████   ██ ██████  ███████    ██
+██      ██    ██ ██   ██ ██   ██     ██      ██ ██   ██      ██    ██
+███████  ██████  ██   ██ ██████      ██      ██ ██   ██ ███████    ██
+*/
+
+
+function loadfirstarticle(){
   xmlhttp = new GetXmlHttpObject;
   if(xmlhttp == null){
     alert("Your browser does not support XMLHTTP!");
@@ -56,11 +108,17 @@ function loadfirstarticle(){
   counter = setInterval(timeAdd, 2000);
 }
 
-////////////////////////////////////////////////////////
-///////////////// Change News Function /////////////////
-///////////////////////////////////////////////////////
+/*
+ ██████ ██   ██  █████  ███    ██  ██████  ███████     ███    ██ ███████ ██     ██ ███████
+██      ██   ██ ██   ██ ████   ██ ██       ██          ████   ██ ██      ██     ██ ██
+██      ███████ ███████ ██ ██  ██ ██   ███ █████       ██ ██  ██ █████   ██  █  ██ ███████
+██      ██   ██ ██   ██ ██  ██ ██ ██    ██ ██          ██  ██ ██ ██      ██ ███ ██      ██
+ ██████ ██   ██ ██   ██ ██   ████  ██████  ███████     ██   ████ ███████  ███ ███  ███████
+*/
+
+
 document.onkeydown = function(e) {
-  //////////CREATING VARIABLES //////////////////
+
   e = e || window.event;
   xmlhttp = new GetXmlHttpObject;
   if(xmlhttp == null){
@@ -87,4 +145,3 @@ document.onkeydown = function(e) {
   clearInterval(counter);
   counter = setInterval(timeAdd, 2000);
 }
-/////////////////////////////////////////////////
