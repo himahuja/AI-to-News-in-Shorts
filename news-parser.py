@@ -7,7 +7,7 @@ import os
 # works on Python 3
 ###################
 
-url = 'file:///Applications/XAMPP/xamppfiles/htdocs/NIS/AI-to-News-in-Shorts/data/1_inshorts.html'
+url = 'file:///Applications/XAMPP/xamppfiles/htdocs/NIS/AI-to-News-in-Shorts/data/2_inshorts.html'
 page = urllib.request.urlopen(url)
 content = page.read()
 
@@ -24,4 +24,4 @@ cols = ['headline', 'article', 'author', 'date', 'source', 'image']
 for head, article, author, date, source, image in data:
     stored.append([head.get_text(), article.get_text(), author.get_text(), date.get_text(), source['href'], image])
 df = pd.DataFrame(stored, columns = cols)
-df.to_csv('data/1_1.csv')
+df.to_csv('data/2.csv')
