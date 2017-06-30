@@ -23,8 +23,16 @@
 	margin: 0;
 	padding: 0;
 }
-img{
-	border: none;
+.news-card-image{
+  position: relative;
+  display: inline-block;
+  height: 250;
+  width: 280;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background-size: cover;
+  background-position: 50%;
 }
 
 body{
