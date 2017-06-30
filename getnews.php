@@ -123,7 +123,7 @@ if(isset($_GET["dir"])){
 
 
 
-$query = "SELECT iid, headline, articleBody, author
+$query = "SELECT iid, headline, articleBody, author, source, image
         FROM articles WHERE iid = '$_iid'";
 $result = mysqli_query($conn, $query);
 
@@ -134,11 +134,12 @@ if (mysqli_num_rows($result) > 0) {
     // output data of each row
     while($row = mysqli_fetch_assoc($result)){
         echo "<div id='container'><section><article id = 'news-card'>
-        <div id = 'identity' >".$row["iid"]."</div>
-        <h1>".$row["headline"]."</h1>
+        <div id = 'identity' style='display:none'>".$row["iid"]."</div>";
+        echo $row["image"];
+        echo "<h1>".$row["headline"]."</h1>
         <p>".$row["author"]."</p>
         <p>".$row["articleBody"]."</p>
-        <a href='#' class='readmore' onclick='return readmorenews();'>
+        <a href='".$row["source"]."' class='readmore' onclick='return readmorenews();' target='_blank'>
         Read more</a>";
         if(mysqli_num_rows($result2) > 0){
           while($statement = mysqli_fetch_assoc($result2)){
