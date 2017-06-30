@@ -2,6 +2,7 @@
 var xmlhttp;
 var time;
 var counter; //pseudo variable
+var php = 'http://localhost/NIS/AI-to-News-in-Shorts/getnews.php';
 ///////////////////////////////////////////////////////
 //////////////////////////////////////////////////////
 
@@ -53,7 +54,7 @@ function readmorenews(){
     alert("Your browser does not support XMLHTTP!");
     return;
   }
-  var article = "getnews.php";
+  var article = php;
   var iid = document.getElementById('identity').innerHTML;
   article = article + "?iid=" + iid;
   var temp = 1;
@@ -93,7 +94,7 @@ function bookmarknews(){
     alert("Your browser does not support XMLHTTP!");
     return;
   }
-  var article = "getnews.php";
+  var article = php;
   var iid = document.getElementById('identity').innerHTML;
   article = article + "?iid=" + iid;
   article = article + "&bookmark=" + bookmark;
@@ -122,7 +123,7 @@ function loadfirstarticle(){
     alert("Your browser does not support XMLHTTP!");
     return;
   }
-  var article = "getnews.php";
+  var article = php;
   var iid = 0
   var dir = 0
   article = article + "?dir=" + dir;
@@ -155,7 +156,7 @@ document.onkeydown = function(e) {
     return;
   }
 
-  var article = "getnews.php";
+  var article = php;
   article = article + "?dir=" + e.keyCode;
   var iid = document.getElementById("identity");
   if (iid == null){
