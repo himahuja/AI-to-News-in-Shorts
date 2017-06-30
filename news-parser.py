@@ -17,10 +17,11 @@ articles = soup.find_all('div', {'itemprop': 'articleBody'})
 authors = soup.find_all('span', {'class': 'author'})
 dates = soup.find_all('span', {'clas':'date'})
 sources = soup.find_all('a', {'class':'source'})
-data = zip(heads, articles, authors, dates, sources)
+images = soup.find_all('div', {'class': 'news-card-image'})
+data = zip(heads, articles, authors, dates, sources, images)
 stored = []
-cols = ['headline', 'article', 'author', 'date', 'source']
-for head, article, author, date, source in data:
-    stored.append([head.get_text(), article.get_text(), author.get_text(), date.get_text(), source['href']])
+cols = ['headline', 'article', 'author', 'date', 'source', 'image']
+for head, article, author, date, source, image in data:
+    stored.append([head.get_text(), article.get_text(), author.get_text(), date.get_text(), source['href'], image])
 df = pd.DataFrame(stored, columns = cols)
-df.to_csv('data/1.csv')
+df.to_csv('data/1_1.csv')
