@@ -12,12 +12,11 @@ from collections import Counter
 #################################################
 #Personal API for using Dandelion-EU
 datatxt = DataTXT(app_id='7a313081ecd24154bb78b048090cf45e', app_key='7a313081ecd24154bb78b048090cf45e')
-
 #################################################
 cols = ['iid','headline', 'articleBody', 'author', 'date', 'source', 'image', 'counter', 'bookmark', 'readmore']
 df = pd.read_csv('data/day3.csv', names = cols)
-##################################################
 
+##################################################
 def extract_entities(df):
     total = []
     entites = []
