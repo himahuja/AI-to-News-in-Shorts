@@ -6,3 +6,7 @@ data/4_inshorts_files/
 data/*.html
 data/categories/*
 !data/categories/*.html
+
+__pycache__/
+
+*.ipynb
