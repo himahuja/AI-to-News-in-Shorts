@@ -33,5 +33,5 @@ def newsparser(url):
     df = pd.DataFrame(stored, columns = cols)
     return df
 
-#newsparser('file:///Applications/XAMPP/xamppfiles/htdocs/NIS/AI-to-News-in-Shorts/data/4_inshorts.html', 'data/4.csv')
-#df.to_csv(output)
+# df = newsparser('file:///Applications/XAMPP/xamppfiles/htdocs/NIS/AI-to-News-in-Shorts/data/5_inshorts.html')
+# df.to_csv('data/5.csv')
