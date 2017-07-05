@@ -3,7 +3,11 @@ data/1_inshorts_files/
 data/2_inshorts_files/
 data/3_inshorts_files/
 data/4_inshorts_files/
+data/5_inshorts_files/
+data/6_inshorts_files/
+data/7_inshorts_files/
 data/*.html
+
 data/categories/*
 !data/categories/*.html
 
