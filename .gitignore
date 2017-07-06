@@ -9,7 +9,7 @@ data/7_inshorts_files/
 data/*.html
 
 data/categories/*
-!data/categories/*.html
+!data/categories/*.p
 
 __pycache__/
 
