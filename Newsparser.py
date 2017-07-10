@@ -33,5 +33,20 @@ def newsparser(url):
     df = pd.DataFrame(stored, columns = cols)
     return df
 
-# df = newsparser('file:///Applications/XAMPP/xamppfiles/htdocs/NIS/AI-to-News-in-Shorts/data/5_inshorts.html')
-# df.to_csv('data/5.csv')
+def newsparser2(url):
+        """
+        Takes the input url for processing and returns a csv of the following format:
+        text = ['headline' + 'article']
+        """
+        page = urllib.request.urlopen(url)
+        content = page.read()
+        soup = BeautifulSoup(content, 'html.parser')
+        heads = soup.find_all('span', {'itemprop': 'headline'})
+        stored = []
+        for head in heads:
+            stored.append(head.get_text())
+        return stored
+
+
+# df = newsparser('file:///Applications/XAMPP/xamppfiles/htdocs/NIS/AI-to-News-in-Shorts/data/7_inshorts.html')
+# df.to_csv('data/7.csv')
