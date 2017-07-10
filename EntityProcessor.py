@@ -10,6 +10,8 @@ from collections import Counter
 import pickle as pk
 #To parse the news articles
 import Newsparser
+#To work in graphs
+import Grapher
 #################################################
 #Personal API for using Dandelion-EU
 datatxt = DataTXT(app_id='7a313081ecd24154bb78b048090cf45e', app_key='7a313081ecd24154bb78b048090cf45e')
@@ -22,6 +24,7 @@ def entity_extractor(text, weight = 1):
     """Using Dandelion-API to extract entities from text"""
     response = datatxt.nex(text)
     entity = []
+    w_entity = []
     for annotation in response.annotations:
         entity.append(annotation["spot"])
         w_entity = entity * weight
@@ -64,40 +67,82 @@ def reader_processor(csv, cols = cols):
 def category_processor(url):
     df = Newsparser.newsparser(url)
     entities = []
-    text = ''
+    document = []
     for i, row in df.iterrows():
-        text = text + row["articleBody"] + ' '
-
-    entity, _ = entity_extractor(text)
-    print(entity)
-    entities.extend(entity)
+        text = row["articleBody"] + row["headline"]
+        entity, _ = entity_extractor(text)
+        entities.append(entity)
     return entities
 
 #######################################################
 #######################################################
 
-def match_score(base, contestant):
+def match_score(G, contestant):
     """
-        Takes the list of entities of the category : base
+        Takes the list of list entities of the category : base
         Takes the list of entities of article: contestant
     """
+    score = 0
+    for entity in contestant:
+        try:
+            neighbors = G[entity].values()
+            score += G.node[entity]['relevance']
 
-    base_count = Counter(base)
-    print(base_count)
-    contestant_count = Counter(contestant)
-    print(contestant_count)
-    intersect = base_count.keys() & contestant_count.keys()
-    intersect_count = {k:v for k, v in contestant_count.items() if k in intersect}
-    return( sum(intersect_count.values()) / sum(contestant_count.values()) )
+            """Since the graph is connected,
+            There will always be neighbors,
+            So the try statement is omitted."""
 
-# base = category_processor('file:///Applications/XAMPP/xamppfiles/htdocs/NIS/AI-to-News-in-Shorts/data/categories/politics20.html')
-_,base = reader_processor('data/day3.csv')
-text1 = 'A YouTube video shows automaker Tesla\'s Automatic Emergency Braking (AEB) system prevent a rear-end collision. Despite the Autopilot being not engaged, the car used sensors and radar to determine an accident was imminent before sounding the alarm and applying the brakes. The driver was able to move the vehicle towards the right to avoid the collision.'
-text2 = 'Honda Motor had to shut down its Sayama plant in Japan on Monday after it was found that WannaCry ransomware had hit its computer network. The plant, which produces around 1,000 vehicles each day, resumed its production on Tuesday. The WannaCry ransomware exploits a Windows vulnerability and locks up files on computers until demanded ransom is paid in bitcoins.'
+            for neighbor in neighbors:
+                for k, v in neighbor:
+                    score += v
+        except:
+            continue
+
+    return score;
+
+def category_finder(categories, url):
+    clouds = {}
+    for k, v in categories.items():
+        clouds[k] = pk.load(open(v, 'rb'))
+
+    articles = Newsparser.newsparser2(url)
+    count = 0
+    for article in articles:
+        count = count + 1
+        entity, _ = entity_extractor(article)
+        max_score = 0
+        old_max_score = 0
+        label = None
+        scores = {}
+        for k, v in clouds.items():
+            scores[k] = match_score(v, entity)
+        print (article, count, scores)
+
+def interest_finder(categories, stats):
+    prin("Say Hello!")
+
+
+
+
+#_,base = reader_processor('data/day3.csv')
+# base = pk.load(open("data/categories/technology.p", "rb"))
+# text1 = 'Indian women\'s cricket team spinner Ekta Bisht\'s father, Kundan Singh Bisht, a former Havaldar in the Indian Army, ran a tea stall to support her dream of playing cricket for India. Kundan had opened the tea stall in their hometown of Almora, with the income from the tea stall helping the family bear the expenses of her training.'
+# text2 = 'Chinese officials on Thursday said that the atmosphere is not right for a bilateral meeting between Indian Prime Minister Narendra Modi and Chinese President Xi Jinping at the G20 summit in Germany. The armies of India and China are currently involved in a standoff on the India-China-Bhutan tri-junction and both governments have exchanged warnings over the situation.'
+# text3 = 'What is the technology over which Qualcomm has sued Apple? Chipmaker Qualcomm on Friday announced it has filed a complaint with US International Trade Commission, accusing Apple of infringing six patents. Qualcomm said the technologies covered by the patents are central to the iPhone\'s performance. They cover aspects of extending a device\'s battery life in situations like transmitting video files over cellular network and playing games with rich graphics.'
 #entites, total = extract_entities('data/day3.csv', cols)
-
-entity1, _ = entity_extractor(text1)
-entity2, _ = entity_extractor(text2)
-
-print(match_score(base, entity1))
-print(match_score(base, entity2))
+#
+#entity1, _ = entity_extractor(text1)
+#entity2, _ = entity_extractor(text2)
+# base = category_processor('file:///Applications/XAMPP/xamppfiles/htdocs/NIS/AI-to-News-in-Shorts/data/categories/world.html')
+# pk.dump(base, open('data/categories/world.p', 'wb'))
+# G = Grapher.category_grapher('data/categories/world.p', 'data/categories/worldG.p')
+#print(match_score(G, entity1))
+#print(match_score(G, entity2))
+categories = {'sports': 'data/categories/sportsG.p', \
+              'politics': 'data/categories/politicsG.p', \
+              'entertainment': 'data/categories/entertainmentG.p',\
+              'national': 'data/categories/nationalG.p',\
+              'world': 'data/categories/worldG.p'
+             }
+url = 'file:///Applications/XAMPP/xamppfiles/htdocs/NIS/AI-to-News-in-Shorts/data/sample.html'
+category_finder(categories, url)
