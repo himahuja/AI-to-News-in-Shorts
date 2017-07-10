@@ -10,7 +10,7 @@ data/*.html
 data/sample_files
 
 #Ignore the trials folder
-Trials/
+Trials/*
 
 
 
