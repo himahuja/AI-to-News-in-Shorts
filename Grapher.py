@@ -87,5 +87,3 @@ def graph_printer(G, databool = False):
     """
     print (G.edges(data=databool))
     print (G.nodes(data=databool))
-
-# category_grapher('data/categories/entertainment2.p')
