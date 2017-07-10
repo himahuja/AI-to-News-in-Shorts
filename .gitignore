@@ -7,6 +7,12 @@ data/5_inshorts_files/
 data/6_inshorts_files/
 data/7_inshorts_files/
 data/*.html
+data/sample_files
+
+#Ignore the trials folder
+Trials
+
+
 
 data/categories/*
 !data/categories/*.p
