@@ -14,7 +14,7 @@ import Newsparser
 import Grapher
 #################################################
 #Personal API for using Dandelion-EU
-datatxt = DataTXT(app_id='7a313081ecd24154bb78b048090cf45e', app_key='7a313081ecd24154bb78b048090cf45e')
+datatxt = DataTXT(app_id='', app_key='')
 #################################################
 cols = ['iid','headline', 'articleBody', 'author', 'date', 'source', 'image', 'counter', 'bookmark', 'readmore']
 ##################################################
@@ -133,7 +133,7 @@ def interest_finder(categories, stats):
 #
 #entity1, _ = entity_extractor(text1)
 #entity2, _ = entity_extractor(text2)
-# base = category_processor('file:///Applications/XAMPP/xamppfiles/htdocs/NIS/AI-to-News-in-Shorts/data/categories/world.html')
+# base = category_processor('/AI-to-News-in-Shorts/data/categories/world.html')
 # pk.dump(base, open('data/categories/world.p', 'wb'))
 # G = Grapher.category_grapher('data/categories/world.p', 'data/categories/worldG.p')
 #print(match_score(G, entity1))
@@ -144,5 +144,5 @@ categories = {'sports': 'data/categories/sportsG.p', \
               'national': 'data/categories/nationalG.p',\
               'world': 'data/categories/worldG.p'
              }
-url = 'file:///Applications/XAMPP/xamppfiles/htdocs/NIS/AI-to-News-in-Shorts/data/sample.html'
+url = '/AI-to-News-in-Shorts/data/sample.html'
 category_finder(categories, url)
